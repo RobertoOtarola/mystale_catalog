@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages

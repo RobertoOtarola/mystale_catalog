@@ -23,11 +23,11 @@ class Creature(models.Model):
     description  = models.TextField(verbose_name='Descripción de campo')
     created_at   = models.DateTimeField(auto_now_add=True)
 
-# Estadísticas de combate — agregadas en 0002
-    hp      = models.PositiveSmallIntegerField(default=50, verbose_name='HP')
-    attack  = models.PositiveSmallIntegerField(default=50, verbose_name='Ataque')
-    defense = models.PositiveSmallIntegerField(default=50, verbose_name='Defensa')
-    speed   = models.PositiveSmallIntegerField(default=50, verbose_name='Velocidad')
+    # Estadísticas de combate — agregadas en 0002
+    hp      = models.PositiveSmallIntegerField(default=50, verbose_name='HP',       validators=[MinValueValidator(1), MaxValueValidator(255)])
+    attack  = models.PositiveSmallIntegerField(default=50, verbose_name='Ataque',   validators=[MinValueValidator(1), MaxValueValidator(255)])
+    defense = models.PositiveSmallIntegerField(default=50, verbose_name='Defensa',  validators=[MinValueValidator(1), MaxValueValidator(255)])
+    speed   = models.PositiveSmallIntegerField(default=50, verbose_name='Velocidad',validators=[MinValueValidator(1), MaxValueValidator(255)])
 
     class Meta:
         ordering = ['name']
