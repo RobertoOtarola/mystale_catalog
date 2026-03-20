@@ -25,3 +25,22 @@ class CreatureListView(ListView):
         ctx['element_choices'] = Creature.ELEMENT_CHOICES
         ctx['selected_element'] = self.request.GET.get('element', '')
         return ctx
+
+class CreatureDetailView(DetailView):
+    model = Creature
+    template_name = 'creatures/creature_detail.html'
+    context_object_name = 'creature'
+
+class CreatureCreateView(CreateView):
+    model         = Creature
+    form_class    = CreatureForm
+    template_name = 'creatures/creature_form.html'
+    success_url   = reverse_lazy('creatures:list')
+
+    def form_valid(self, form):
+        messages.success(self.request, f'Criatura "{form.instance.name}" registrada exitosamente.')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Corregí los errores del formulario antes de continuar.')
+        return super().form_invalid(form)
