@@ -1,0 +1,44 @@
+{% extends 'creatures/base.html' %}
+
+{% block title %}Catálogo — Mystale{% endblock %}
+
+{% block content %}
+<section class="catalog-header">
+  <h1>Catálogo de Criaturas</h1>
+  <form method="get" class="filter-bar">
+    <label for="element">Filtrar por elemento:</label>
+    <select name="element" id="element" onchange="this.form.submit()">
+      <option value="">— Todos —</option>
+      {% for value, label in element_choices %}
+        <option value="{{ value }}" {% if selected_element == value %}selected{% endif %}>
+          {{ label }}
+        </option>
+      {% endfor %}
+    </select>
+    {% if selected_element %}
+      <a href="{% url 'creatures:list' %}" class="clear-filter">✕ Limpiar filtro</a>
+    {% endif %}
+  </form>
+</section>
+
+<div class="creature-grid">
+  {% for creature in creatures %}
+    <a href="{% url 'creatures:detail' creature.pk %}" class="creature-card element-{{ creature.element_type }}">
+      <div class="card-header">
+        <span class="element-badge">{{ creature.get_element_type_display }}</span>
+        <span class="threat">⚠ {{ creature.threat_level }}</span>
+      </div>
+      <h2 class="creature-name">{{ creature.name }}</h2>
+      <p class="creature-desc">{{ creature.description|truncatechars:80 }}</p>
+      <div class="stats-mini">
+        <span>HP {{ creature.hp }}</span>
+        <span>ATK {{ creature.attack }}</span>
+        <span>DEF {{ creature.defense }}</span>
+        <span>VEL {{ creature.speed }}</span>
+      </div>
+    </a>
+  {% empty %}
+    <p class="empty-state">No se encontraron criaturas para este filtro.</p>
+  {% endfor %}
+</div>
+{% endblock %}

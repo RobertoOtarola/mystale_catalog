@@ -1,0 +1,39 @@
+{% extends 'creatures/base.html' %}
+
+{% block title %}{{ creature.name }} — Mystale{% endblock %}
+
+{% block content %}
+<article class="creature-detail element-{{ creature.element_type }}">
+  <header class="detail-header">
+    <a href="{% url 'creatures:list' %}" class="back-link">← Volver al catálogo</a>
+    <span class="element-badge large">{{ creature.get_element_type_display }}</span>
+  </header>
+
+  <h1>{{ creature.name }}</h1>
+  <p class="threat-label">Nivel de amenaza: <strong>{{ creature.threat_level }} / 10</strong></p>
+  <p class="field-description">{{ creature.description }}</p>
+
+  <div class="stats-grid">
+    <div class="stat-block">
+      <span class="stat-label">HP</span>
+      <span class="stat-value">{{ creature.hp }}</span>
+      <div class="stat-bar"><div style="width:{{ creature.hp|floatformat:0 }}%"></div></div>
+    </div>
+    <div class="stat-block">
+      <span class="stat-label">Ataque</span>
+      <span class="stat-value">{{ creature.attack }}</span>
+      <div class="stat-bar"><div style="width:{{ creature.attack|floatformat:0 }}%"></div></div>
+    </div>
+    <div class="stat-block">
+      <span class="stat-label">Defensa</span>
+      <span class="stat-value">{{ creature.defense }}</span>
+      <div class="stat-bar"><div style="width:{{ creature.defense|floatformat:0 }}%"></div></div>
+    </div>
+    <div class="stat-block">
+      <span class="stat-label">Velocidad</span>
+      <span class="stat-value">{{ creature.speed }}</span>
+      <div class="stat-bar"><div style="width:{{ creature.speed|floatformat:0 }}%"></div></div>
+    </div>
+  </div>
+</article>
+{% endblock %}
